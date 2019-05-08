@@ -180,7 +180,7 @@ public class DBConnectionFillerImpl extends MetadataFillerImpl<DatabaseConnectio
                 }
                 // TDI-35419 TDQ-11853: make sure the redshift connection save the productName is redshift, not use the
                 // postgresql.becauses we use this value to create dbmslauguage
-                boolean isRedshift = databaseType.equals(EDatabaseTypeName.REDSHIFT.getDisplayName());
+                boolean isRedshift = EDatabaseTypeName.REDSHIFT.getDisplayName().equals(databaseType);
                 if (isRedshift) {
                     productName = EDatabaseTypeName.REDSHIFT.getDisplayName();
                 }
@@ -192,14 +192,12 @@ public class DBConnectionFillerImpl extends MetadataFillerImpl<DatabaseConnectio
                 TaggedValueHelper.setTaggedValue(dbconn, TaggedValueHelper.DB_PRODUCT_NAME, productName);
                 TaggedValueHelper.setTaggedValue(dbconn, TaggedValueHelper.DB_PRODUCT_VERSION, productVersion);
 
-                boolean isHive = databaseType.equals(EDatabaseTypeName.HIVE.getDisplayName());
-                boolean isHiveJdbc = databaseType.equals(EDatabaseTypeName.GENERAL_JDBC.getDisplayName())
-                        && dbconn.getDriverClass() != null
-                        && dbconn.getDriverClass().equals(EDatabase4DriverClassName.HIVE.getDriverClass());
-                boolean isImpala = databaseType.equals(EDatabaseTypeName.IMPALA.getDisplayName());
-                boolean isImpalaJdbc = databaseType.equals(EDatabaseTypeName.IMPALA.getDisplayName())
-                        && dbconn.getDriverClass() != null
-                        && dbconn.getDriverClass().equals(EDatabase4DriverClassName.IMPALA.getDriverClass());
+                boolean isHive = EDatabaseTypeName.HIVE.getDisplayName().equals(databaseType);
+                boolean isHiveJdbc = EDatabaseTypeName.GENERAL_JDBC.getDisplayName().equals(databaseType)
+                        && EDatabase4DriverClassName.HIVE.getDriverClass().equals(dbconn.getDriverClass());
+                boolean isImpala = EDatabaseTypeName.IMPALA.getDisplayName().equals(databaseType);
+                boolean isImpalaJdbc = EDatabaseTypeName.IMPALA.getDisplayName().equals(databaseType)
+                        && EDatabase4DriverClassName.IMPALA.getDriverClass().equals(dbconn.getDriverClass());
                 if (!isHive && !isHiveJdbc && !isImpala && !isImpalaJdbc) {
                     String identifierQuote = dbMetadata.getIdentifierQuoteString();
                     ConnectionHelper.setIdentifierQuoteString(identifierQuote == null ? "" : identifierQuote, dbconn); //$NON-NLS-1$
