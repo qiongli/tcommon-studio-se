@@ -184,7 +184,7 @@ public class DBConnectionFillerImpl extends MetadataFillerImpl<DatabaseConnectio
                 if (isRedshift) {
                     productName = EDatabaseTypeName.REDSHIFT.getDisplayName();
                 }
-                boolean isRedshift_SSO = databaseType.equals(EDatabaseTypeName.REDSHIFT_SSO.getDisplayName());
+                boolean isRedshift_SSO = EDatabaseTypeName.REDSHIFT_SSO.getDisplayName().equals(databaseType);
                 if (isRedshift_SSO) {
                     productName = EDatabaseTypeName.REDSHIFT_SSO.getDisplayName();
                 }
